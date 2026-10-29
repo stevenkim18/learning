@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="CH 02-2강 uv를 이용한 LangChain 개발 환경 구축. Python 초보자를 위한 개념, 운영체제별 설치, 명령어와 코드 해설, 실습 및 오류 해결을 담은 독립 실행형 수업.">
+<title>CH 02-2강. uv를 이용한 LangChain 개발 환경 구축 · 랭체인 공부하기</title><meta property="og:type" content="article"><meta property="og:title" content="CH 02-2강. uv를 이용한 LangChain 개발 환경 구축 · 랭체인 공부하기"><meta property="og:description" content="CH 02-2강 uv를 이용한 LangChain 개발 환경 구축. Python 초보자를 위한 개념, 운영체제별 설치, 명령어와 코드 해설, 실습 및 오류 해결을 담은 독립 실행형 수업."><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect x=%222%22 y=%222%22 width=%2228%22 height=%2228%22 rx=%227%22 fill=%22%23245bce%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22%3E%E2%86%94%3C/text%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light;--bg:#f8f9fc;--paper:#fff;--ink:#1e293b;--muted:#5b697e;--line:#e0e6ee;--blue:#245bce;--soft:#edf3ff;--code:#f3f6fb;--green:#146844;--red:#a32f35}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:94px}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;font-size:17px;line-height:1.85;word-break:keep-all;overflow-wrap:anywhere}button,input{font:inherit}button,a,input,summary,pre,[tabindex]{-webkit-tap-highlight-color:transparent}a{color:var(--blue);text-decoration-thickness:1px;text-underline-offset:4px}button,a,summary{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:wait}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,pre:focus-visible,[tabindex]:focus-visible{outline:3px solid #ee9d26;outline-offset:4px}button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 13px;line-height:1.5}button:hover{border-color:var(--blue);color:var(--blue)}.primary{background:var(--blue);border-color:var(--blue);color:#fff}.primary:hover{background:#194aaf;color:#fff}.skip{position:fixed;top:-100px;left:16px;background:#fff;z-index:100;padding:8px 16px}.skip:focus{top:8px}.masthead{height:68px;position:sticky;top:0;z-index:20;background:rgba(248,249,252,.97);border-bottom:1px solid var(--line)}.mast-inner{max-width:1320px;margin:auto;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 44px;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-size:15px;font-weight:750;letter-spacing:-.3px}.mark{width:28px;height:28px;border:1.8px solid var(--blue);border-radius:8px;display:grid;place-items:center;color:var(--blue)}.mark svg{width:22px;height:22px}.chapter-tag{color:var(--muted);font-size:13px;letter-spacing:.4px}.print{font-size:13px;background:transparent}.reading{position:absolute;bottom:-1px;left:0;width:100%;height:3px;appearance:none;border:0;display:block;background:transparent}.reading::-webkit-progress-bar{background:transparent}.reading::-webkit-progress-value{background:var(--blue)}.reading::-moz-progress-bar{background:var(--blue)}.layout{max-width:1240px;margin:auto;display:grid;grid-template-columns:220px minmax(0,1fr);gap:56px;padding:52px 36px 100px}.sidebar{position:sticky;top:108px;align-self:start;max-height:calc(100vh - 140px);overflow:auto;padding:0 5px 10px 0}.sidebar summary{list-style:none;cursor:default;font-size:12px;letter-spacing:1.3px;color:var(--muted);font-weight:700;margin:0 0 18px}.sidebar summary::-webkit-details-marker{display:none}.toc{display:flex;flex-direction:column;gap:4px}.toc a{display:flex;gap:11px;padding:7px 10px;border-left:2px solid transparent;text-decoration:none;color:var(--muted);font-size:13px;line-height:1.6;border-radius:0 6px 6px 0}.toc a:hover{color:var(--blue)}.toc a[aria-current="location"]{background:var(--soft);border-color:var(--blue);color:var(--blue);font-weight:700}.toc .toc-num{font-size:11px;padding-top:2px;opacity:.8;font-variant-numeric:tabular-nums}.side-bottom{margin:24px 12px 0;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);line-height:1.8}.side-bottom strong{display:block;color:var(--ink);font-size:13px}.content{min-width:0;max-width:840px}.hero{padding:0 0 40px}.eyebrow{font-size:12px;font-weight:750;letter-spacing:1.4px;color:var(--blue);margin:0 0 14px}.hero h1{font-size:54px;line-height:1.22;letter-spacing:-2.7px;color:#14243b;margin:0 0 22px;font-weight:800}.hero-meta{font-size:13px;color:var(--muted);margin:0 0 26px;line-height:1.9}.hero-lead{font-size:20px;line-height:1.75;max-width:680px;letter-spacing:-.5px;margin:0 0 28px}.facts{display:grid;grid-template-columns:1fr 1.6fr;gap:16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:17px 0}.fact-label{display:block;font-size:11px;font-weight:750;letter-spacing:.4px;color:var(--muted);margin-bottom:4px}.fact-value{font-size:14px;color:var(--ink)}.source-note{margin:24px 0 0;border:1px solid var(--line);border-radius:9px;background:#fff;padding:11px 16px;font-size:12px;color:var(--muted);line-height:1.8}.source-note summary{cursor:pointer;color:#465771;font-weight:650}.source-note p{margin:9px 0 3px}.intro{padding:0 0 30px}.intro p{margin:0 0 14px}.lesson-section{border-top:1px solid var(--line);padding:40px 0 46px;scroll-margin-top:90px}.section-heading{display:flex;gap:16px;align-items:flex-start;margin:0 0 24px}.section-number{font-size:35px;font-weight:750;line-height:1.4;letter-spacing:-1px;color:var(--blue);font-variant-numeric:tabular-nums;flex-shrink:0}.section-heading h2{margin:4px 0 0;font-size:29px;line-height:1.5;letter-spacing:-1px;font-weight:780}h3{font-size:21px;line-height:1.6;letter-spacing:-.55px;margin:34px 0 14px;color:#223750}h4{font-size:18px;margin:26px 0 12px}p{margin:0 0 17px}strong{font-weight:750}em{font-style:normal;color:#334d74}ul,ol{padding-left:25px;margin:12px 0 24px}li{padding-left:4px;margin:6px 0}hr{border:0;border-top:1px solid var(--line);margin:32px 0}code{font-family:ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:.88em;color:#1c4eaa;background:var(--soft);border-radius:4px;padding:2px 5px;overflow-wrap:anywhere}.codebox{border:1px solid #dfe6f1;border-radius:11px;margin:20px 0 24px;overflow:hidden;background:var(--code);min-width:0}.codebar{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #e1e7f0;background:#edf1f8;padding:8px 13px;color:#4b607c;font-size:12px;line-height:1.5}.codebar>div{display:flex;align-items:center;gap:13px}.codebar button{background:transparent;border-color:#ced8e7;font-size:11px;padding:4px 9px;border-radius:5px}.code-download{text-decoration:none;font-size:11px}.codebox pre{margin:0;padding:17px 15px 18px 0;overflow:auto;line-height:1.85;font-size:13px;tab-size:4;text-align:left;word-break:normal;overflow-wrap:normal}.codebox pre code{background:none;padding:0;color:#243c5a;font-size:inherit;display:block;counter-reset:line;white-space:pre}.code-line{display:block;min-height:1.85em;position:relative;padding-left:47px}.code-line::before{counter-increment:line;content:counter(line);display:inline-block;width:27px;position:absolute;left:0;text-align:right;color:#657b98;font-size:11px;user-select:none}.table-wrap{border:1px solid var(--line);border-radius:10px;overflow:auto;margin:20px 0 26px;max-width:100%;background:#fff}table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.8}th,td{text-align:left;padding:13px 15px;border-bottom:1px solid #e8edf4;vertical-align:top}th{background:#f0f4fa;color:#3b4e68;font-size:12px;font-weight:750}tr:last-child td{border-bottom:0}td code{font-size:.87em}th:first-child{min-width:110px}figure{margin:24px 0 28px}.diagram{background:#fff;border:1px solid var(--line);border-radius:12px;padding:23px 22px}.diagram figcaption{font-size:12px;font-weight:750;letter-spacing:.2px;color:#5c6d85;margin-bottom:20px}.flow{display:flex;align-items:stretch;gap:9px;min-width:0}.flow-item{flex:1;min-width:0;padding:15px 9px;border:1px solid #d3e0f7;border-radius:8px;background:#f5f8ff;display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px}.flow-item strong{font-size:14px;color:#244b8b;line-height:1.5}.flow-item>span:last-child{font-size:11px;line-height:1.7;color:#5a6e8d}.flow-step{font-size:10px;font-weight:750;border-radius:50%;width:23px;height:23px;background:#dce8ff;color:var(--blue);line-height:23px}.flow-arrow{align-self:center;color:var(--blue);font-size:17px;flex-shrink:0}.caption{font-size:12px;color:var(--muted);margin:16px 0 0!important;line-height:1.8}.prompt-pair{display:grid;grid-template-columns:1fr 1.4fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:24px 0}.prompt-pair>div{padding:21px;background:#fff}.prompt-pair>div+div{background:var(--soft);border-left:1px solid var(--line)}.prompt-pair b{font-size:11px;color:var(--muted);display:block;margin-bottom:10px}.prompt-pair p{font-size:15px;margin:0;line-height:1.85}.chain-agent{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}.chain-agent figure{margin:0;padding:20px 16px}.chain-agent figcaption{font-size:18px;color:var(--ink);margin:0}.chain-agent .caption{margin:0 0 18px!important;font-size:12px}.chain-agent svg{width:100%;height:auto;display:block;max-height:220px}.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}.compare>div{min-width:0}.compare-label{font-size:13px;font-weight:700}.compare-label span{display:block;font-size:11px;color:var(--muted);font-weight:400}.compare .codebox{margin-top:8px}.callout{border-left:3px solid var(--blue);background:#eef4ff;border-radius:0 8px 8px 0;padding:17px 20px;margin:22px 0;font-size:15px}.callout p:last-child{margin:0}.practice-list{background:#fff;border:1px solid var(--line);border-radius:11px;padding:20px 22px;margin:22px 0 28px}.practice-top{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:700}.practice-count{color:var(--blue)}.practice-progress{height:5px;width:100%;display:block;margin:13px 0 18px;accent-color:var(--blue)}.practice-progress::-webkit-progress-bar{background:#e5ecf6;border-radius:9px}.practice-progress::-webkit-progress-value{background:var(--blue);border-radius:9px}.practice-list label{display:flex;align-items:center;gap:10px;font-size:14px;padding:8px 0;cursor:pointer}.practice-list input{accent-color:var(--blue);width:18px;height:18px;flex-shrink:0}.solution{border:1px solid #d5e0f1;border-radius:11px;background:#fff;margin:20px 0}.solution summary{padding:17px 20px;color:var(--blue);font-size:15px;font-weight:700;cursor:pointer}.solution>div{padding:0 20px 5px}.added{display:inline-block;color:#6b5b36;background:#f7f1e5;font-size:10px;letter-spacing:.2px;padding:2px 6px;line-height:1.5;border-radius:3px;margin-left:6px;vertical-align:middle}.small{font-size:12px;color:var(--muted);line-height:1.8}.simulator{border:1px solid #cbdcf8;background:#fff;border-radius:12px;margin:26px 0;padding:22px}.simulator h4{margin:0 0 7px}.simulator label{font-size:12px;display:block;font-weight:700;margin:17px 0 6px}.sim-controls{display:flex;gap:9px}.sim-controls input{width:100%;min-width:0;border:1px solid #b7c8e3;border-radius:7px;padding:8px 12px;background:#fff;color:var(--ink);font-size:15px}.sim-controls button{white-space:nowrap;font-size:13px}.trace{margin:21px 0 0;display:grid;gap:9px}.trace-row{display:grid;grid-template-columns:93px 1fr;gap:12px;align-items:baseline;border-top:1px solid #e6ecf6;padding-top:10px}.trace-row dt{color:#5c7091;font-family:ui-monospace,Consolas,monospace;font-size:12px}.trace-row dd{margin:0;color:#245baf;font-size:13px;word-break:break-word}.quiz{margin-top:20px}.question{padding:22px;border:1px solid var(--line);border-radius:10px;background:#fff;margin:0 0 16px;min-width:0}.question legend{float:left;width:100%;font-size:15px;font-weight:750;line-height:1.8;margin:0 0 14px;padding:0}.question legend code{font-size:.9em}.question .options{clear:both}.question label{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.8;border:1px solid #e4e9f1;border-radius:7px;padding:10px 12px;margin:8px 0;cursor:pointer}.question label:hover{background:#f7f9ff}.question label:has(input:checked){border-color:var(--blue);background:var(--soft)}.question label:focus-within{outline:2px solid #ee9d26;outline-offset:2px}.question input{accent-color:var(--blue);margin:6px 0 0;flex-shrink:0}.question .feedback{font-size:13px;margin:14px 0 0;padding-top:11px;border-top:1px solid var(--line);line-height:1.9}.question.is-correct{border-color:#80b69e}.question.is-correct .feedback{color:var(--green)}.question.is-wrong{border-color:#d4999e}.question.is-wrong .feedback{color:var(--red)}[hidden]{display:none!important}.quiz-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0}.quiz-actions button{font-size:14px}.quiz-result{font-size:14px;line-height:1.8;color:var(--blue);font-weight:650;margin:16px 0;min-height:26px}.next{border:1px solid #cddcf5;border-radius:12px;background:var(--soft);padding:24px;margin:24px 0}.next .eyebrow{margin-bottom:8px}.next h3{margin:0 0 12px;font-size:22px}.next p{font-size:14px}.next-link{display:inline-block;text-decoration:none;background:var(--blue);color:#fff;border-radius:7px;font-size:13px;padding:8px 15px;margin-top:5px}.source-inline{font-size:11px;color:#526d9b;margin-left:4px;white-space:nowrap}.footer{border-top:1px solid var(--line);padding:30px 0 0;font-size:12px;color:var(--muted);line-height:1.9}.footer a{display:inline-block;margin:4px 12px 4px 0}.footer p{margin:0 0 8px}.back-top{text-decoration:none;display:block;margin-top:16px;font-size:13px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:10px 18px;border-radius:8px;background:#223750;color:#fff;font-size:13px;z-index:100;max-width:calc(100vw - 32px);text-align:center;line-height:1.7;box-shadow:0 6px 24px #22375025}.noscript{background:#fff0c7;padding:14px 20px;font-size:14px}
+.lesson-section{scroll-margin-top:0}
+@media(max-width:1120px){.layout{gap:32px;grid-template-columns:190px minmax(0,1fr);padding-left:28px;padding-right:28px}.toc a{font-size:12px}.section-heading h2{font-size:27px}.flow{gap:6px}.diagram{padding:20px 16px}.flow-item{padding:13px 6px}.flow-item strong{font-size:13px}}
+@media(max-width:840px){.mast-inner{padding:0 24px}.layout{display:block;max-width:790px;padding:24px 24px 70px}.sidebar{position:relative;top:auto;max-height:none;padding:0;margin:0 0 36px;overflow:visible}.sidebar details{background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 16px}.sidebar summary{cursor:pointer;list-style:revert;margin:0;font-size:12px;letter-spacing:.3px}.sidebar summary::-webkit-details-marker{display:initial}.sidebar .toc{display:grid;grid-template-columns:1fr 1fr;gap:3px 12px;margin-top:15px}.sidebar .side-bottom{display:none}.toc a{font-size:12px}.hero h1{font-size:45px}.hero-lead{font-size:19px}.flow-5{flex-wrap:wrap}.flow-5 .flow-item{flex:1 1 130px}.flow-5 .flow-arrow{display:none}}
+@media(max-width:520px){body{font-size:15.5px;line-height:1.95}.masthead{height:59px}.mast-inner{padding:0 18px}.brand{font-size:13px;gap:8px}.mark{width:25px;height:25px}.chapter-tag{display:none}.print{font-size:11px;padding:5px 9px}.layout{padding:20px 19px 60px}.sidebar{margin-bottom:29px}.sidebar .toc{grid-template-columns:1fr}.hero{padding-bottom:26px}.hero h1{font-size:38px;letter-spacing:-2px;margin-bottom:17px}.eyebrow{font-size:10px}.hero-meta{font-size:11px;margin-bottom:20px}.hero-lead{font-size:17px;line-height:1.85}.facts{grid-template-columns:1fr;gap:11px;padding:15px 0}.fact-label{font-size:10px;margin-bottom:2px}.fact-value{font-size:12px}.source-note{font-size:11px;padding:10px 12px}.intro{padding-bottom:20px}.lesson-section{padding:29px 0 32px}.section-heading{gap:11px;margin-bottom:21px}.section-number{font-size:29px}.section-heading h2{font-size:23px;line-height:1.55;letter-spacing:-.8px;margin-top:2px}h3{font-size:19px;margin-top:28px}th,td{padding:10px 11px;font-size:12px}th{font-size:11px}.table-wrap th:first-child{min-width:91px}.table-wrap table{min-width:390px}.table-wrap{margin:17px 0 23px}.codebox pre{font-size:12px;line-height:1.85;padding-right:14px}.code-line{padding-left:38px}.code-line::before{width:23px;font-size:10px}.codebar{font-size:10px;padding:7px 10px}.codebar>div{gap:8px}.codebar button,.code-download{font-size:10px}.diagram{padding:18px 14px;border-radius:10px}.diagram figcaption{font-size:11px;margin-bottom:16px}.flow{flex-direction:column;align-items:stretch;gap:7px}.flow-item{flex:auto;padding:11px;display:grid;grid-template-columns:25px 1fr;column-gap:10px;row-gap:2px;text-align:left;align-items:center}.flow-item .flow-step{grid-row:1/3}.flow-item strong{font-size:13px}.flow-item>span:last-child{font-size:11px}.flow-arrow{transform:rotate(90deg);line-height:1;align-self:center}.flow-5{flex-wrap:nowrap}.flow-5 .flow-item{flex:auto}.flow-5 .flow-arrow{display:block}.prompt-pair,.chain-agent,.compare{grid-template-columns:1fr}.prompt-pair>div+div{border-left:0;border-top:1px solid var(--line)}.prompt-pair p{font-size:14px}.chain-agent svg{max-height:220px}.compare{gap:2px}.simulator{padding:17px}.sim-controls{flex-wrap:wrap}.sim-controls button{width:100%}.trace-row{grid-template-columns:70px 1fr;gap:8px}.trace-row dd{font-size:12px}.practice-list{padding:17px}.practice-top{font-size:12px}.practice-list label{font-size:13px}.question{padding:17px 14px}.question legend{font-size:14px}.question label{font-size:13px;padding:9px 10px}.question .feedback{font-size:12px}.next{padding:20px}.next h3{font-size:20px}.next p{font-size:13px}.footer{font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+@media print{html{scroll-behavior:auto}body{background:#fff;font-size:10pt;line-height:1.7}.masthead,.sidebar,.copy,.code-download,.sim-controls,.quiz-actions,.toast,.back-top,.next-link{display:none!important}.layout{display:block;padding:0;max-width:none}.content{max-width:none}.hero h1{font-size:30pt}.hero{padding-bottom:20px}.lesson-section{padding:20px 0}.section-heading h2{font-size:19pt}.section-number{font-size:23pt}h3{font-size:14pt}.codebox,.diagram,.question,.practice-list,.next,table{break-inside:avoid}.codebox pre{white-space:pre-wrap;overflow:visible;font-size:8pt}.codebox pre code{white-space:pre-wrap}.code-line{white-space:pre-wrap;overflow-wrap:anywhere}.codebar{padding:6px 12px}.table-wrap{overflow:visible}.table-wrap table{min-width:0}.source-note{font-size:8pt}.question legend{float:none}.source-inline{font-size:7pt}.lesson-section:last-child{padding-bottom:0}a{color:#244f8e}.flow-item{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+.hero h1{font-size:48px;line-height:1.32;letter-spacing:-2px;max-width:800px}.hero-lead{font-size:18px}.lesson-prev{font-size:12px;text-decoration:none;display:inline-block;margin-bottom:20px;color:#5b697e}.lesson-prev:hover{color:#245bce}.goal-flow{margin:25px 0 10px}.env-pair{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin:24px 0}.env{border:1px solid #d4e0f2;border-radius:12px;background:#fff;padding:22px}.env h4{margin:0 0 8px;font-size:16px;color:#244b8b}.env p{font-size:13px;color:#5b697e;margin-bottom:14px}.env-inside{border:1px dashed #8eafe7;border-radius:8px;background:#f2f6ff;padding:17px;text-align:center}.env-inside code{font-size:15px}.env-inside span{display:block;font-size:12px;margin-top:9px;color:#405d89}.env-caption{font-size:12px;color:#5b697e;margin-top:-10px}.os-selector{border:1px solid #cedcf3;border-radius:12px;background:#fff;margin:22px 0;padding:20px}.os-intro{font-size:12px;color:#5b697e;margin-bottom:14px}.os-tabs{display:flex;gap:7px;border-bottom:1px solid #e0e6ee;padding-bottom:13px}.os-tabs button{font-size:13px;min-width:83px}.os-tabs button[aria-selected=true]{background:#245bce;border-color:#245bce;color:#fff}.os-panel h4{font-size:14px;margin:18px 0 8px}.os-panel p{font-size:12px;color:#5b697e;margin:10px 0}.os-panel .codebox{margin:14px 0}.os-note{font-size:11px;line-height:1.85;color:#5b697e;margin:15px 0 0}.run-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}.run-compare>div{background:#fff;border:1px solid #e0e6ee;border-radius:10px;padding:19px}.run-compare strong{font-size:14px;color:#245bce}.run-compare p{font-size:12px;margin:11px 0 0;color:#5b697e}.run-compare code{display:block;font-size:13px;padding:8px 10px}.project-card{background:#fff;border:1px solid #d4e0f2;border-radius:11px;padding:20px 24px;margin:24px 0}.project-card strong{font-size:14px;color:#244b8b}.project-files{font:13px/2 ui-monospace,Consolas,monospace;color:#48617f;margin:13px 0 0;padding:0;list-style:none}.project-files li{padding-left:16px;margin:0;border-left:1px solid #dbe5f5}.project-files .new-file{font-weight:700;color:#245bce;background:#edf3ff;border-radius:0 4px 4px 0}.practice-list label{align-items:flex-start;padding:10px 0;border-bottom:1px solid #eef1f6}.practice-list label:last-child{border-bottom:0}.practice-list input{margin-top:5px}.practice-list label span{min-width:0}.practice-list label b{display:block;font-weight:650}.practice-list label small{font-size:11px;color:#5b697e;display:block;line-height:1.9;margin-top:2px}.prev-bottom{display:inline-block;font-size:13px;text-decoration:none;border:1px solid #d4e0f2;border-radius:7px;padding:8px 14px;background:#fff;margin:20px 0 0}.version-note{font-size:13px;line-height:1.9}.study-note{font-size:12px;color:#5b697e;padding:12px 0 0}.sidebar .toc a{padding-top:5px;padding-bottom:5px}.sidebar .side-bottom{margin-top:18px;padding-top:15px}
+@media(max-width:840px){.hero h1{font-size:42px}.sidebar .toc{grid-template-columns:1fr 1fr}.hero-lead{font-size:17px}}
+@media(max-width:520px){.hero h1{font-size:32px;letter-spacing:-1.3px;line-height:1.42}.hero-lead{font-size:16px}.env-pair,.run-compare{grid-template-columns:1fr}.env{padding:18px}.os-selector{padding:17px 13px}.os-tabs{gap:6px}.os-tabs button{font-size:12px;min-width:0;flex:1;padding:8px}.os-panel h4{font-size:13px}.os-note{font-size:11px}.os-panel .codebox pre{font-size:11px}.project-card{padding:18px}.project-files{font-size:12px}.practice-list label{font-size:13px}.sidebar .toc{grid-template-columns:1fr}.version-note{font-size:12px}}
+@media print{.hero h1{font-size:28pt}.os-tabs,.lesson-prev,.prev-bottom{display:none!important}.os-panel{display:block!important}.os-selector,.env,.run-compare>div{break-inside:avoid}.hero-lead{font-size:12pt}.env-pair{grid-template-columns:1fr 1fr}}
+</style></head>
+<body id="top"><a class="skip" href="#main">수업 본문으로 바로 가기</a>
+<header class="masthead"><div class="mast-inner"><div class="brand"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9.5 14.5 5-5M8 16l-1 1a3.5 3.5 0 0 1-5-5l4-4a3.5 3.5 0 0 1 5 0m2 8a3.5 3.5 0 0 0 5 0l4-4a3.5 3.5 0 0 0-5-5l-1 1" stroke="#245bce" stroke-width="1.5" stroke-linecap="round" transform="translate(1 0) scale(.92)"/></svg></span>랭체인 공부하기 <span class="chapter-tag">/ CHAPTER 02</span></div><button type="button" class="print" id="print">인쇄 / PDF 저장</button></div><progress class="reading" id="reading" max="100" value="0" aria-label="수업 읽기 진행률"></progress></header>
+<noscript><div class="noscript">수업 내용과 운영체제별 설치 명령을 모두 읽을 수 있어. 코드 복사, 운영체제 탭 선택과 퀴즈 채점은 JavaScript를 켜면 사용할 수 있어.</div></noscript>
+<div class="layout"><aside class="sidebar"><details id="toc-details" open><summary>이 강의의 목차</summary><nav class="toc" aria-label="수업 목차"><a href="#section-1"><span class="toc-num">01</span><span>uv란? · 패키지와 가상환경</span></a><a href="#section-2"><span class="toc-num">02</span><span>운영체제별 uv 설치</span></a><a href="#section-3"><span class="toc-num">03</span><span>Python 3.11 설치</span></a><a href="#section-4"><span class="toc-num">04</span><span>프로젝트 생성과 첫 실행</span></a><a href="#section-5"><span class="toc-num">05</span><span>LangChain 패키지 설치</span></a><a href="#section-6"><span class="toc-num">06</span><span>가상환경 활성화와 uv run</span></a><a href="#section-7"><span class="toc-num">07</span><span>실습 · 설치 확인 프로그램</span></a><a href="#section-8"><span class="toc-num">08</span><span>프로젝트의 중요한 파일</span></a><a href="#section-9"><span class="toc-num">09</span><span>uv 핵심 명령어 정리</span></a><a href="#section-10"><span class="toc-num">10</span><span>오류와 해결 방법 6가지</span></a><a href="#section-11"><span class="toc-num">11</span><span>직접 해보는 추가 실습</span></a><a href="#section-12"><span class="toc-num">12</span><span>오늘의 이해도 퀴즈</span></a><a href="#section-13"><span class="toc-num">13</span><span>최종 정리와 다음 강의</span></a></nav></details><div class="side-bottom"><strong>CH 02 · LLM과 LangChain</strong>2주차 / 2강 · 총 10강<br>개념 → 설치 → 실행 → 확인<a class="back-top" href="ch02-1-langchain.html">← 2-1강 LangChain이란?</a><a class="back-top" href="#top">맨 위로 ↑</a></div></aside>
+<main class="content" id="main"><header class="hero"><a class="lesson-prev" href="ch02-1-langchain.html">← CH 02-1강. LangChain이란?</a><p class="eyebrow">CH 02–2 · BUILD YOUR LANGCHAIN ENVIRONMENT</p><h1>uv를 이용한<br>LangChain 개발 환경 구축</h1><p class="hero-meta">2주차 · 2강 / 10강 · Python 초보자 과정 · 2026년 10월 기준</p><p class="hero-lead">uv로 Python과 LangChain을 설치하고 프로젝트 실행하기</p><div class="facts"><div><span class="fact-label">권장 학습 시간</span><span class="fact-value">50~70분</span></div><div><span class="fact-label">API 비용</span><span class="fact-value">없음 · 이번 강의에서는 LLM을 호출하지 않음</span></div></div><details class="source-note"><summary>실습 전에 알아두기</summary><p>예제의 모델명은 <code>gpt-5.4-mini</code>야. 실제 호출 전에 내 계정에서 사용할 수 있는 모델인지 확인해 줘.</p><p>코드는 복사하거나 파일 저장 버튼으로 내려받아 터미널에서 실행해. 실제 모델을 호출하는 예제는 API 키와 인터넷 연결이 필요하고 사용 요금이 발생할 수 있어.</p></details></header>
+<div class="intro"><p>이번 강의가 끝나면 다음과 같은 개발 환경을 직접 만들 수 있어.</p><figure class="diagram"><figcaption>오늘 완성할 개발 환경</figcaption><div class="flow flow-4"><div class="flow-item"><span class="flow-step">01</span><strong>내 컴퓨터</strong><span>Windows / macOS / Linux</span></div><span class="flow-arrow" aria-hidden="true">→</span><div class="flow-item"><span class="flow-step">02</span><strong>uv</strong><span>Python 버전 · 패키지 · 프로젝트 관리</span></div><span class="flow-arrow" aria-hidden="true">→</span><div class="flow-item"><span class="flow-step">03</span><strong>langchain-study 프로젝트</strong><span>Python 3.11 · 독립 가상환경 (.venv)</span></div><span class="flow-arrow" aria-hidden="true">→</span><div class="flow-item"><span class="flow-step">04</span><strong>Python에서 LangChain import 성공</strong><span>오늘의 도착점</span></div></div></figure></div>
+<section class="lesson-section" id="section-1" aria-labelledby="title-1"><header class="section-heading"><span class="section-number" aria-hidden="true">01</span><h2 id="title-1">먼저 uv가 무엇인지 이해하기</h2></header><h3>1-1. uv란?</h3>
+<p><strong>uv는 Python 버전, 패키지, 가상환경, 프로젝트 의존성을 관리하는 도구야.</strong></p>
+<p>기존 Python 개발에서는 여러 도구를 함께 사용하기도 했어.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">기존 도구</th><th scope="col">역할</th><th scope="col">uv에서 주로 사용하는 명령어</th></tr></thead><tbody><tr><td><code>pyenv</code></td><td>Python 버전 관리</td><td><code>uv python</code></td></tr><tr><td><code>venv</code></td><td>가상환경 생성</td><td><code>uv venv</code></td></tr><tr><td><code>pip</code></td><td>패키지 설치</td><td><code>uv add</code></td></tr><tr><td><code>pip-tools</code> 등</td><td>의존성 버전 관리</td><td><code>uv lock</code></td></tr><tr><td><code>python</code></td><td>Python 코드 실행</td><td><code>uv run python</code></td></tr></tbody></table></div>
+<p>uv는 이런 작업을 하나의 도구에서 처리할 수 있고, Rust로 구현되어 빠른 패키지 관리 기능을 제공해. <a class="source-inline" href="https://docs.astral.sh/uv/" target="_blank" rel="noopener noreferrer">uv 개요 ↗</a><a class="source-inline" href="https://docs.astral.sh/uv/guides/projects/" target="_blank" rel="noopener noreferrer">프로젝트 가이드 ↗</a></p>
+<h3>1-2. 패키지가 무엇일까?</h3>
+<p>Python에서 패키지(Package)는 다른 개발자들이 만들어 놓은 기능을 가져다 쓸 수 있도록 배포한 코드 묶음이야.</p>
+<p>예를 들어:</p>
+<div class="codebox"><div class="codebar"><span>Python</span><div><button type="button" class="copy" data-copy="code-5" aria-label="Python 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="Python 코드"><code id="code-5" class="language-python"><span class="code-line">from langchain_openai import ChatOpenAI</span></code></pre></div>
+<p>이 코드는 외부 라이브러리의 <code>ChatOpenAI</code> 클래스를 가져오는 코드야.</p>
+<p>이 코드를 실행하려면 먼저 <code>langchain-openai</code>라는 패키지가 설치되어 있어야 해.</p>
+<p>그래서 우리가 uv를 사용하는 거야.</p>
+<h3>1-3. 가상환경은 왜 필요할까?</h3>
+<p>여기서 꼭 이해해야 하는 개념이 있어.</p>
+<p>바로 <strong>가상환경(Virtual Environment)</strong>이야.</p>
+<p>예를 들어 컴퓨터에서 두 프로젝트를 개발한다고 생각해 보자.</p>
+<div class="env-pair"><div class="env"><h4>프로젝트 A</h4><p>LangChain 학습</p><div class="env-inside"><code>.venv</code><span>패키지 버전 1.x</span></div></div><div class="env"><h4>프로젝트 B</h4><p>기존 AI 서비스</p><div class="env-inside"><code>.venv</code><span>패키지 버전 0.x</span></div></div></div><p class="env-caption">서로 다른 버전을 독립적으로 사용 가능</p>
+<p>만약 모든 프로젝트가 같은 Python 패키지 설치 공간을 공유한다면, A 프로젝트에서 패키지를 업데이트했을 때 B 프로젝트가 제대로 작동하지 않을 수도 있어.</p>
+<p>가상환경을 사용하면 각 프로젝트마다 독립적인 패키지 설치 공간을 가질 수 있어.</p>
+<p>uv 프로젝트는 일반적으로 <code>.venv</code>라는 폴더에 이 환경을 만들어 줘.</p>
+</section>
+<section class="lesson-section" id="section-2" aria-labelledby="title-2"><header class="section-heading"><span class="section-number" aria-hidden="true">02</span><h2 id="title-2">uv 설치하기</h2></header><p>이제 실제 설치를 시작해 보자.</p>
+<p>우리는 다음 버전을 기준으로 학습할 거야.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">항목</th><th scope="col">선택</th></tr></thead><tbody><tr><td>Python</td><td>3.11</td></tr><tr><td>패키지 관리자</td><td>uv</td></tr><tr><td>LangChain</td><td>설치 시 호환되는 최신 버전</td></tr><tr><td>코드 편집기</td><td>VS Code 권장</td></tr><tr><td>운영체제</td><td>Windows / macOS / Linux 모두 가능</td></tr></tbody></table></div>
+<p>LangChain 공식 문서의 최소 요구사항은 Python 3.10 이상이야. 이번 강의에서는 안정적인 학습 환경을 만들기 위해 Python 3.11을 선택할 거야. <a class="source-inline" href="https://docs.langchain.com/oss/python/langchain/install" target="_blank" rel="noopener noreferrer">LangChain 설치 ↗</a></p>
+<p><strong>운영체제에 맞는 설치 명령어</strong></p>
+<p>현재 사용하는 운영체제를 선택하면 해당 명령어가 표시돼.</p>
+<div class="os-selector"><div class="os-tabs" role="tablist" aria-label="uv 설치 운영체제 선택"><button type="button" role="tab" id="tab-windows" aria-controls="panel-windows" aria-selected="false" tabindex="-1" data-os="windows">Windows</button><button type="button" role="tab" id="tab-macos" aria-controls="panel-macos" aria-selected="true" tabindex="0" data-os="macos">macOS</button><button type="button" role="tab" id="tab-linux" aria-controls="panel-linux" aria-selected="false" tabindex="-1" data-os="linux">Linux</button></div><div role="tabpanel" class="os-panel" id="panel-windows" aria-labelledby="tab-windows" tabindex="0"><h4>Windows 설치 명령어</h4><p>PowerShell을 열고 실행해.</p><div class="codebox"><div class="codebar"><span>PowerShell</span><div><button type="button" class="copy" data-copy="code-1" aria-label="PowerShell 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="PowerShell 코드"><code id="code-1" class="language-powershell"><span class="code-line">powershell -ExecutionPolicy ByPass -c &quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span></code></pre></div><p>설치가 끝나면 터미널을 새로 열고 <code>uv --version</code>으로 확인해.</p></div><div role="tabpanel" class="os-panel" id="panel-macos" aria-labelledby="tab-macos" tabindex="0"><h4>macOS 설치 명령어</h4><p>터미널 앱에서 실행해.</p><div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-2" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-2" class="language-bash"><span class="code-line">curl -LsSf https://astral.sh/uv/install.sh | sh</span></code></pre></div><p>설치가 끝나면 터미널을 새로 열고 <code>uv --version</code>으로 확인해.</p></div><div role="tabpanel" class="os-panel" id="panel-linux" aria-labelledby="tab-linux" tabindex="0"><h4>Linux 설치 명령어</h4><p>터미널에서 실행해.</p><div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-3" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-3" class="language-bash"><span class="code-line">curl -LsSf https://astral.sh/uv/install.sh | sh</span></code></pre></div><p>설치가 끝나면 터미널을 새로 열고 <code>uv --version</code>으로 확인해.</p></div><p class="os-note">이 명령어는 uv의 공식 설치 스크립트를 내려받아 실행해. 이 페이지의 버튼은 운영체제 선택과 코드 복사만 수행해. 실제 설치는 터미널에서 진행해.</p></div>
+<p>uv 공식 설치 방법을 기준으로 작성했어. <a class="source-inline" href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener noreferrer">uv 설치 ↗</a></p>
+<h3>2-1. uv 설치 확인하기</h3>
+<p>설치를 마쳤다면 터미널을 새로 열고 다음 명령어를 실행해.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-6" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-6" class="language-bash"><span class="code-line">uv --version</span></code></pre></div>
+<p>예상되는 출력 형식:</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-7" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-7" class="language-text"><span class="code-line">uv 0.x.y</span></code></pre></div>
+<p><code>0.x.y</code>는 버전 번호가 표시되는 자리야. 실제 출력값은 설치 시점에 따라 달라져.</p>
+<p>이 명령어가 성공하면 uv 설치가 완료된 거야.</p>
+</section>
+<section class="lesson-section" id="section-3" aria-labelledby="title-3"><header class="section-heading"><span class="section-number" aria-hidden="true">03</span><h2 id="title-3">Python 3.11 설치하기</h2></header><p>uv는 Python 자체도 설치하고 관리할 수 있어.</p>
+<p>기존에 컴퓨터에 다른 Python 버전이 설치되어 있더라도, 이번 프로젝트는 Python 3.11을 사용하도록 설정할 수 있어.</p>
+<h3>3-1. Python 설치</h3>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-8" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-8" class="language-bash"><span class="code-line">uv python install 3.11</span></code></pre></div>
+<p>명령어를 나누어 보면 다음과 같아.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">명령어 부분</th><th scope="col">의미</th></tr></thead><tbody><tr><td><code>uv</code></td><td>uv 프로그램 실행</td></tr><tr><td><code>python</code></td><td>Python 관련 기능 사용</td></tr><tr><td><code>install</code></td><td>Python 설치</td></tr><tr><td><code>3.11</code></td><td>설치할 Python 버전 계열</td></tr></tbody></table></div>
+<p>이 명령어는 호환되는 Python 3.11 패치 버전을 설치해.</p>
+<h3>3-2. 설치된 Python 확인</h3>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-9" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-9" class="language-bash"><span class="code-line">uv python list --only-installed</span></code></pre></div>
+<p>설치된 Python 인터프리터의 버전과 위치가 출력돼. 기존에 설치되어 있던 Python 버전도 표시될 수 있어.</p>
+<p>여기서 중요한 점은 Python이 여러 개 설치되어 있어도 문제없다는 거야. 프로젝트마다 필요한 버전을 선택하면 돼. <a class="source-inline" href="https://docs.astral.sh/uv/guides/install-python/" target="_blank" rel="noopener noreferrer">Python 관리 ↗</a></p>
+</section>
+<section class="lesson-section" id="section-4" aria-labelledby="title-4"><header class="section-heading"><span class="section-number" aria-hidden="true">04</span><h2 id="title-4">LangChain 프로젝트 생성하기</h2></header><p>이제 우리가 앞으로 학습할 프로젝트를 만들어 보자.</p>
+<p>프로젝트 이름은 <code>langchain-study</code>로 정할게.</p>
+<h3>4-1. 프로젝트 생성 명령어</h3>
+<p>터미널에서 작업할 상위 폴더로 이동한 다음 다음 명령어를 실행해.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-10" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-10" class="language-bash"><span class="code-line">uv init --no-package --python 3.11 langchain-study</span></code></pre></div>
+<p>이 명령어에는 중요한 부분이 네 가지 있어.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">부분</th><th scope="col">의미</th></tr></thead><tbody><tr><td><code>uv init</code></td><td>새로운 Python 프로젝트 초기화</td></tr><tr><td><code>--no-package</code></td><td>패키지 빌드 구조 없이 간단한 앱 프로젝트 생성</td></tr><tr><td><code>--python 3.11</code></td><td>프로젝트의 Python 기준 버전 지정</td></tr><tr><td><code>langchain-study</code></td><td>새로 만들 프로젝트 폴더 이름</td></tr></tbody></table></div>
+<p>왜 <code>--no-package</code>를 사용할까?</p>
+<p>최신 uv는 일반적으로 <code>uv init</code> 실행 시 <code>src/</code> 디렉터리를 사용하는 패키지형 구조를 생성해.</p>
+<div class="callout version-note"> uv 0.12부터 새 애플리케이션의 기본 구조에 빌드 시스템과 <code>src/</code>가 포함돼. 이전 버전에서는 기본 구조가 다르게 보일 수 있어. 이번 강의처럼 <code>--no-package</code>를 명시하면 <code>main.py</code>를 직접 실행하는 간단한 구조로 시작할 수 있어. <a class="source-inline" href="https://docs.astral.sh/uv/concepts/projects/init/" target="_blank" rel="noopener noreferrer">프로젝트 생성 문서 ↗</a></div>
+<p>하지만 우리는 당분간 <code>main.py</code> 파일을 직접 실행하면서 공부할 거라서 더 단순한 구조를 선택하는 거야. 이 방식 역시 공식적으로 지원돼. <a class="source-inline" href="https://docs.astral.sh/uv/concepts/projects/init/" target="_blank" rel="noopener noreferrer">프로젝트 생성 ↗</a></p>
+<h3>4-2. 프로젝트 폴더로 이동</h3>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-11" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-11" class="language-bash"><span class="code-line">cd langchain-study</span></code></pre></div>
+<p><code>cd</code>는 <em>Change Directory</em>의 약자로, 현재 작업 폴더를 변경하는 명령어야.</p>
+<p>Python 패키지 설치와 실행은 앞으로 주로 이 폴더 안에서 진행할 거야.</p>
+<h3>4-3. 생성된 파일 확인</h3>
+<p>이 시점의 주요 파일 구조는 다음과 같아.</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-12" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-12" class="language-text"><span class="code-line">langchain-study/</span><span class="code-line">├── .python-version</span><span class="code-line">├── .gitignore</span><span class="code-line">├── README.md</span><span class="code-line">├── main.py</span><span class="code-line">└── pyproject.toml</span></code></pre></div>
+<p>uv 설정과 실행 환경에 따라 <code>.git/</code> 같은 추가 폴더가 있을 수 있어.</p>
+<p>각 파일의 역할을 살펴보자.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">파일</th><th scope="col">역할</th></tr></thead><tbody><tr><td><code>main.py</code></td><td>우리가 작성할 Python 코드</td></tr><tr><td><code>pyproject.toml</code></td><td>프로젝트 정보와 의존성 설정</td></tr><tr><td><code>.python-version</code></td><td>사용할 Python 버전 지정</td></tr><tr><td><code>README.md</code></td><td>프로젝트 설명 문서</td></tr><tr><td><code>.gitignore</code></td><td>Git에 포함하지 않을 파일 및 폴더 지정</td></tr></tbody></table></div>
+<h3>4-4. Python 버전 설정 파일 확인</h3>
+<p><code>.python-version</code> 파일을 열어 보면 일반적으로 다음과 같은 내용이 들어 있어.</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-13" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-13" class="language-text"><span class="code-line">3.11</span></code></pre></div>
+<p>uv는 이 값을 참고해서 프로젝트의 Python 환경을 결정해.</p>
+<p>Python 버전을 나중에 변경할 때 사용하는 명령어도 있어.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-14" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-14" class="language-bash"><span class="code-line">uv python pin 3.11</span></code></pre></div>
+<p>단, 프로젝트의 Python 버전 요구사항은 <code>pyproject.toml</code>의 <code>requires-python</code>과도 일치해야 해. 이번에는 프로젝트 생성 시 3.11을 지정했으니 별도로 수정할 필요 없어.</p>
+<h3>4-5. 첫 Python 프로그램 실행</h3>
+<p>생성된 <code>main.py</code>를 열어 봐.</p>
+<p>기본적으로 다음과 비슷한 코드가 들어 있어.</p>
+<div class="codebox"><div class="codebar"><span>main.py</span><div><a class="code-download" href="data:text/plain;charset=utf-8;base64,ZGVmIG1haW4oKToKICAgIHByaW50KCJIZWxsbyBmcm9tIGxhbmdjaGFpbi1zdHVkeSEiKQoKaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIG1haW4oKQo=" download="main.py">파일 저장 ↓</a><button type="button" class="copy" data-copy="code-15" aria-label="main.py 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="main.py 코드"><code id="code-15" class="language-python"><span class="code-line">def main():</span><span class="code-line">    print(&quot;Hello from langchain-study!&quot;)</span><span class="code-line"> </span><span class="code-line">if __name__ == &quot;__main__&quot;:</span><span class="code-line">    main()</span></code></pre></div>
+<p>이 코드를 실행하는 명령어는 다음과 같아.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-16" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-16" class="language-bash"><span class="code-line">uv run python main.py</span></code></pre></div>
+<p>예상 출력:</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-17" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-17" class="language-text"><span class="code-line">Hello from langchain-study!</span></code></pre></div>
+<p>명령어를 나눠 보면 다음과 같아.</p>
+<ul><li><code>uv run</code>: uv가 관리하는 프로젝트 환경에서 실행</li><li><code>python</code>: Python 인터프리터 실행</li><li><code>main.py</code>: 실행할 Python 파일 이름</li></ul>
+<p>첫 실행 시 uv가 프로젝트 가상환경을 생성하고 필요한 환경을 동기화할 수 있어.</p>
+<p>여기까지 성공했다면 <strong>Python 프로젝트가 정상적으로 생성되고 실행되는 것까지 확인한 거야.</strong></p>
+</section>
+<section class="lesson-section" id="section-5" aria-labelledby="title-5"><header class="section-heading"><span class="section-number" aria-hidden="true">05</span><h2 id="title-5">LangChain 패키지 설치하기</h2></header><p>이제 본격적으로 LangChain을 설치할 차례야.</p>
+<h3>5-1. 어떤 패키지를 설치해야 할까?</h3>
+<p>이번 과정에서는 다음 3개 패키지를 사용하자.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">패키지</th><th scope="col">역할</th></tr></thead><tbody><tr><td><code>langchain</code></td><td>LangChain 핵심 기능과 에이전트 API</td></tr><tr><td><code>langchain-openai</code></td><td>OpenAI 모델 연동</td></tr><tr><td><code>python-dotenv</code></td><td><code>.env</code> 파일의 환경변수 불러오기</td></tr></tbody></table></div>
+<p>LangChain은 모델 공급자별 연동 패키지를 별도로 제공해. OpenAI를 사용하려면 <code>langchain-openai</code>를 설치하는 것이 공식적인 방법이야. <a class="source-inline" href="https://docs.langchain.com/oss/python/langchain/install" target="_blank" rel="noopener noreferrer">LangChain 설치 ↗</a></p>
+<h3>5-2. 패키지 설치 명령어</h3>
+<p>프로젝트 폴더 안에서 실행해.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-18" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-18" class="language-bash"><span class="code-line">uv add langchain langchain-openai python-dotenv</span></code></pre></div>
+<p><code>uv add</code>는 패키지를 설치하면서 프로젝트의 의존성 목록에도 등록하는 명령어야.</p>
+<p>세 패키지를 한 번에 설치하도록 작성한 거야.</p>
+<p>설치하는 동안 <code>Resolved</code>, <code>Prepared</code>, <code>Installed</code> 같은 메시지가 나타날 수 있어.</p>
+<ul><li><code>Resolved</code>: 필요한 패키지와 호환 버전을 결정했어.</li><li><code>Prepared</code>: 패키지를 다운로드하거나 설치 준비를 했어.</li><li><code>Installed</code>: 패키지를 가상환경에 설치했어.</li></ul>
+<p>설치 시에는 하위 의존성 패키지도 함께 설치되기 때문에 우리가 지정한 3개보다 많은 패키지가 표시되는 것이 정상이야.</p>
+<h3>5-3. 가상환경이 자동으로 생성됐을까?</h3>
+<p><code>uv add</code>를 실행하면 uv가 필요한 경우 <code>.venv</code> 폴더를 생성해.</p>
+<p>따라서 이번 방식에서는 따로 <code>python -m venv</code>를 실행할 필요가 없어.</p>
+<p>이제 프로젝트 구조는 다음과 비슷해져.</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-19" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-19" class="language-text"><span class="code-line">langchain-study/</span><span class="code-line">├── .venv/</span><span class="code-line">├── .python-version</span><span class="code-line">├── .gitignore</span><span class="code-line">├── README.md</span><span class="code-line">├── main.py</span><span class="code-line">├── pyproject.toml</span><span class="code-line">└── uv.lock</span></code></pre></div>
+<p><code>.venv</code>와 <code>uv.lock</code>은 프로젝트 실행 또는 의존성 관리 과정에서 생성돼. <a class="source-inline" href="https://docs.astral.sh/uv/guides/projects/" target="_blank" rel="noopener noreferrer">프로젝트 가이드 ↗</a></p></section>
+<section class="lesson-section" id="section-6" aria-labelledby="title-6"><header class="section-heading"><span class="section-number" aria-hidden="true">06</span><h2 id="title-6">가상환경을 활성화해야 할까?</h2></header><p>여기가 uv를 처음 배우는 사람이 가장 헷갈리는 부분이야.</p>
+<p>기존 Python 개발에서는 가상환경을 활성화한 뒤 Python 프로그램을 실행하는 방법을 자주 사용했어.</p>
+<p>예를 들어 Windows에서는 다음과 같은 명령어를 사용해.</p>
+<div class="codebox"><div class="codebar"><span>PowerShell</span><div><button type="button" class="copy" data-copy="code-20" aria-label="PowerShell 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="PowerShell 코드"><code id="code-20" class="language-powershell"><span class="code-line">.venv\Scripts\Activate.ps1</span></code></pre></div>
+<p>macOS나 Linux에서는 다음과 같이 사용하고.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-21" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-21" class="language-bash"><span class="code-line">source .venv/bin/activate</span></code></pre></div>
+<p>하지만 <strong>uv를 이용한 프로젝트 실행에서는 가상환경을 매번 수동으로 활성화할 필요가 없어.</strong></p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-22" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-22" class="language-bash"><span class="code-line">uv run python main.py</span></code></pre></div>
+<p>이 명령어를 실행하면 uv가 프로젝트 가상환경을 사용해 Python 프로그램을 실행해 줘.</p>
+<figure><figcaption class="small">일반 실행과 uv 실행의 차이</figcaption><div class="run-compare"><div><code>python main.py</code><p>현재 셸이 선택한 Python 환경</p></div><div><code>uv run python main.py</code><p>uv가 관리하는 프로젝트 환경</p></div></div></figure>
+<p>우리는 앞으로 이 방식을 기본으로 사용할 거야.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-23" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-23" class="language-bash"><span class="code-line">uv run python 파일이름.py</span></code></pre></div>
+<p>추가로 현재 uv가 어떤 Python을 사용하는지 확인할 수 있어.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-24" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-24" class="language-bash"><span class="code-line">uv run python -c &quot;import sys; print(sys.executable)&quot;</span></code></pre></div>
+<p>여기서 <code>-c</code>는 뒤에 작성한 Python 코드를 직접 실행한다는 뜻이야.</p>
+<p>출력된 경로에 프로젝트의 <code>.venv</code>가 포함되어 있다면 정상적으로 가상환경을 사용하고 있는 거야.</p>
+</section>
+<section class="lesson-section" id="section-7" aria-labelledby="title-7"><header class="section-heading"><span class="section-number" aria-hidden="true">07</span><h2 id="title-7">실습 ① LangChain 설치 확인 프로그램 만들기</h2></header><p>이제 직접 Python 파일을 작성해 보자.</p>
+<p>프로젝트 폴더에 <code>check_env.py</code>라는 새 파일을 만들어.</p>
+<div class="project-card"><strong>langchain-study</strong><ul class="project-files"><li>.venv/</li><li>main.py</li><li class="new-file">check_env.py (새로 만들 파일)</li><li>pyproject.toml</li><li>uv.lock</li></ul></div>
+<h3>7-1. 전체 코드 작성</h3>
+<div class="codebox"><div class="codebar"><span>check_env.py</span><div><a class="code-download" href="data:text/plain;charset=utf-8;base64,aW1wb3J0IHN5cwpmcm9tIGltcG9ydGxpYi5tZXRhZGF0YSBpbXBvcnQgdmVyc2lvbgoKZnJvbSBsYW5nY2hhaW5fb3BlbmFpIGltcG9ydCBDaGF0T3BlbkFJCgpkZWYgbWFpbigpOgogICAgcHJpbnQoIj09PSDqsJzrsJwg7ZmY6rK9IO2ZleyduCA9PT0iKQoKICAgIHByaW50KCJQeXRob246Iiwgc3lzLnZlcnNpb24uc3BsaXQoKVswXSkKICAgIHByaW50KCJMYW5nQ2hhaW46IiwgdmVyc2lvbigibGFuZ2NoYWluIikpCiAgICBwcmludCgiTGFuZ0NoYWluIE9wZW5BSToiLCB2ZXJzaW9uKCJsYW5nY2hhaW4tb3BlbmFpIikpCgogICAgcHJpbnQoIkNoYXRPcGVuQUkg6rCA7KC47Jik6riwIOyEseqztSEiKQogICAgcHJpbnQoIuqwnOuwnCDtmZjqsr0g7KSA67mEIOyZhOujjCEiKQoKaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIG1haW4oKQo=" download="check_env.py">파일 저장 ↓</a><button type="button" class="copy" data-copy="code-25" aria-label="check_env.py 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="check_env.py 코드"><code id="code-25" class="language-python"><span class="code-line">import sys</span><span class="code-line">from importlib.metadata import version</span><span class="code-line"> </span><span class="code-line">from langchain_openai import ChatOpenAI</span><span class="code-line"> </span><span class="code-line">def main():</span><span class="code-line">    print(&quot;=== 개발 환경 확인 ===&quot;)</span><span class="code-line"> </span><span class="code-line">    print(&quot;Python:&quot;, sys.version.split()[0])</span><span class="code-line">    print(&quot;LangChain:&quot;, version(&quot;langchain&quot;))</span><span class="code-line">    print(&quot;LangChain OpenAI:&quot;, version(&quot;langchain-openai&quot;))</span><span class="code-line"> </span><span class="code-line">    print(&quot;ChatOpenAI 가져오기 성공!&quot;)</span><span class="code-line">    print(&quot;개발 환경 준비 완료!&quot;)</span><span class="code-line"> </span><span class="code-line">if __name__ == &quot;__main__&quot;:</span><span class="code-line">    main()</span></code></pre></div>
+<h3>7-2. 코드 한 줄씩 해설</h3>
+<p><strong>① Python 실행 정보 가져오기</strong></p>
+<div class="codebox"><div class="codebar"><span>Python</span><div><button type="button" class="copy" data-copy="code-26" aria-label="Python 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="Python 코드"><code id="code-26" class="language-python"><span class="code-line">import sys</span></code></pre></div>
+<p><code>sys</code>는 Python에서 기본으로 제공하는 모듈이야.</p>
+<p>현재 실행 중인 Python 버전이나 실행 경로 같은 정보를 확인할 수 있어.</p>
+<p><strong>② 설치된 패키지 버전을 확인하는 함수</strong></p>
+<div class="codebox"><div class="codebar"><span>Python</span><div><button type="button" class="copy" data-copy="code-27" aria-label="Python 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="Python 코드"><code id="code-27" class="language-python"><span class="code-line">from importlib.metadata import version</span></code></pre></div>
+<p><code>importlib.metadata</code>도 Python의 표준 라이브러리야.</p>
+<p><code>version()</code> 함수를 사용하면 설치된 패키지의 버전을 확인할 수 있어.</p>
+<p>예를 들어:</p>
+<div class="codebox"><div class="codebar"><span>Python</span><div><button type="button" class="copy" data-copy="code-28" aria-label="Python 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="Python 코드"><code id="code-28" class="language-python"><span class="code-line">version(&quot;langchain&quot;)</span></code></pre></div>
+<p>설치되어 있는 LangChain 버전을 문자열로 반환해.</p>
+<p><strong>③ LangChain의 OpenAI 클래스 가져오기</strong></p>
+<div class="codebox"><div class="codebar"><span>Python</span><div><button type="button" class="copy" data-copy="code-29" aria-label="Python 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="Python 코드"><code id="code-29" class="language-python"><span class="code-line">from langchain_openai import ChatOpenAI</span></code></pre></div>
+<p>이 코드는 <code>langchain-openai</code> 패키지의 <code>ChatOpenAI</code> 클래스를 불러와.</p>
+<p>여기서는 실제 모델 객체를 생성하거나 API 요청을 보내지 않기 때문에 API 키가 필요 없어.</p>
+<p><strong>④ Python 버전 출력</strong></p>
+<div class="codebox"><div class="codebar"><span>Python</span><div><button type="button" class="copy" data-copy="code-30" aria-label="Python 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="Python 코드"><code id="code-30" class="language-python"><span class="code-line">print(&quot;Python:&quot;, sys.version.split()[0])</span></code></pre></div>
+<p>조금 복잡해 보이지만 순서대로 보면 쉬워.</p>
+<ul><li><code>sys.version</code>: Python 버전과 빌드 정보가 들어 있는 문자열</li><li><code>.split()</code>: 공백을 기준으로 문자열을 분리</li><li><code>[0]</code>: 분리된 문자열의 첫 번째 값 선택</li><li><code>print()</code>: 결과 출력</li></ul>
+<p>따라서 <code>3.11.x</code>와 같은 Python 버전 번호가 출력돼.</p>
+<p><strong>⑤ 패키지 버전 출력</strong></p>
+<div class="codebox"><div class="codebar"><span>Python</span><div><button type="button" class="copy" data-copy="code-31" aria-label="Python 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="Python 코드"><code id="code-31" class="language-python"><span class="code-line">print(&quot;LangChain:&quot;, version(&quot;langchain&quot;))</span></code></pre></div>
+<p>현재 설치된 LangChain 버전이 출력돼.</p>
+<p><code>version(&quot;langchain-openai&quot;)</code>도 같은 방식으로 작동해.</p>
+<p><strong>⑥ 프로그램 실행 조건</strong></p>
+<div class="codebox"><div class="codebar"><span>Python</span><div><button type="button" class="copy" data-copy="code-32" aria-label="Python 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="Python 코드"><code id="code-32" class="language-python"><span class="code-line">if __name__ == &quot;__main__&quot;:</span><span class="code-line">    main()</span></code></pre></div>
+<p>이 코드는 해당 Python 파일을 직접 실행했을 때 <code>main()</code> 함수를 호출한다는 의미야.</p>
+<p>다른 파일에서 모듈로 가져오는 경우에는 이 조건이 일반적으로 성립하지 않아.</p>
+<h3>7-3. 프로그램 실행</h3>
+<p>터미널에서 다음 명령어를 실행해.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-33" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-33" class="language-bash"><span class="code-line">uv run python check_env.py</span></code></pre></div>
+<p>예상되는 출력 형식은 다음과 같아.</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-34" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-34" class="language-text"><span class="code-line">=== 개발 환경 확인 ===</span><span class="code-line">Python: 3.11.x</span><span class="code-line">LangChain: 설치된 버전</span><span class="code-line">LangChain OpenAI: 설치된 버전</span><span class="code-line">ChatOpenAI 가져오기 성공!</span><span class="code-line">개발 환경 준비 완료!</span></code></pre></div>
+<p>실제로는 <code>3.11.x</code> 대신 정확한 Python 패치 버전이, <code>설치된 버전</code> 대신 각각의 패키지 버전 번호가 출력될 거야.</p>
+<p>이 결과가 나타난다면 <strong>LangChain 개발 환경 구축에 성공한 거야.</strong></p>
+</section>
+<section class="lesson-section" id="section-8" aria-labelledby="title-8"><header class="section-heading"><span class="section-number" aria-hidden="true">08</span><h2 id="title-8">uv의 중요한 파일 이해하기</h2></header><p>실무에서도 자주 사용하는 부분이라 꼭 알아두면 좋아.</p>
+<h3>8-1. pyproject.toml이란?</h3>
+<p><code>pyproject.toml</code>은 Python 프로젝트를 정의하는 설정 파일이야.</p>
+<p>우리가 <code>uv add</code>로 패키지를 추가하면 이 파일에 의존성 정보가 자동으로 기록돼.</p>
+<p>실제 파일에는 대략 다음과 같은 정보가 들어 있어.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">항목</th><th scope="col">의미</th></tr></thead><tbody><tr><td><code>name</code></td><td>프로젝트 이름</td></tr><tr><td><code>version</code></td><td>프로젝트 버전</td></tr><tr><td><code>requires-python</code></td><td>요구하는 Python 버전 범위</td></tr><tr><td><code>dependencies</code></td><td>프로젝트가 사용하는 패키지 목록</td></tr></tbody></table></div>
+<p>예를 들어 <code>dependencies</code>에는 LangChain과 OpenAI 연동 패키지 등이 들어가게 돼. uv는 패키지 추가 시 결정한 버전 조건도 자동으로 기록해 주므로 처음에는 직접 수정할 필요 없어.</p>
+<h3>8-2. uv.lock이란?</h3>
+<p><code>uv.lock</code>은 프로젝트에서 사용할 의존성의 구체적인 버전과 해결 결과를 기록하는 파일이야.</p>
+<p>비교해 보자.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">파일</th><th scope="col">역할</th></tr></thead><tbody><tr><td><code>pyproject.toml</code></td><td>어떤 패키지가 필요한지 선언</td></tr><tr><td><code>uv.lock</code></td><td>어떤 버전 조합으로 설치할지 기록</td></tr></tbody></table></div>
+<p>개발자 A와 B가 같은 프로젝트를 실행할 때 <code>uv.lock</code>을 함께 사용하면 의존성 버전을 일관되게 맞추는 데 도움이 돼.</p>
+<p>이 파일은 보통 직접 수정하지 않고 uv가 관리하도록 두는 것이 좋아. <a class="source-inline" href="https://docs.astral.sh/uv/concepts/projects/sync/" target="_blank" rel="noopener noreferrer">잠금과 동기화 ↗</a></p>
+<h3>8-3. 프로젝트를 다른 컴퓨터에서 실행한다면?</h3>
+<p>프로젝트를 GitHub 등에서 가져왔다고 생각해 보자.</p>
+<p>그때는 프로젝트 폴더 안에서 다음 명령어를 사용할 수 있어.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-35" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-35" class="language-bash"><span class="code-line">uv sync</span></code></pre></div>
+<p><code>uv sync</code>는 선언된 의존성과 잠금 파일을 바탕으로 프로젝트의 가상환경을 동기화해.</p>
+<p><strong>Git에 포함할 파일과 제외할 파일</strong></p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">파일</th><th scope="col">Git에 포함?</th></tr></thead><tbody><tr><td><code>main.py</code></td><td>포함</td></tr><tr><td><code>check_env.py</code></td><td>포함</td></tr><tr><td><code>pyproject.toml</code></td><td>포함</td></tr><tr><td><code>uv.lock</code></td><td>포함</td></tr><tr><td><code>.python-version</code></td><td>포함</td></tr><tr><td><code>.venv/</code></td><td>제외</td></tr><tr><td><code>.env</code></td><td>제외</td></tr></tbody></table></div>
+<p><code>.env</code> 파일에는 다음 강의부터 API 키를 저장할 수 있으므로 Git에 올라가지 않도록 주의해야 해.</p>
+<p><code>.gitignore</code> 파일에 다음 항목이 있는지 확인해 봐.</p>
+<div class="codebox"><div class="codebar"><span>.gitignore</span><div><button type="button" class="copy" data-copy="code-36" aria-label=".gitignore 코드 복사">복사</button></div></div><pre tabindex="0" aria-label=".gitignore 코드"><code id="code-36" class="language-gitignore"><span class="code-line">.venv/</span><span class="code-line">.env</span></code></pre></div>
+<p>기존에 <code>.venv/</code>가 들어 있다면 중복 추가할 필요는 없어. 또한 <code>.gitignore</code>는 이미 Git에 추적되고 있는 비밀 파일을 자동으로 보호하지는 않으므로, API 키가 담긴 파일은 처음부터 Git에 추가하지 않는 것이 중요해.</p>
+</section>
+<section class="lesson-section" id="section-9" aria-labelledby="title-9"><header class="section-heading"><span class="section-number" aria-hidden="true">09</span><h2 id="title-9">uv 핵심 명령어 정리</h2></header><p>처음부터 명령어를 전부 외울 필요는 없어.</p>
+<p>아래 8개 정도를 우선 익히면 충분해.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="비교 및 정리 표"><table><thead><tr><th scope="col">명령어</th><th scope="col">기능</th></tr></thead><tbody><tr><td><code>uv --version</code></td><td>uv 버전 확인</td></tr><tr><td><code>uv python install 3.11</code></td><td>Python 3.11 설치</td></tr><tr><td><code>uv init --no-package</code></td><td>간단한 프로젝트 초기화</td></tr><tr><td><code>uv add 패키지명</code></td><td>패키지 추가</td></tr><tr><td><code>uv remove 패키지명</code></td><td>패키지 제거</td></tr><tr><td><code>uv run python main.py</code></td><td>프로젝트 환경에서 실행</td></tr><tr><td><code>uv sync</code></td><td>의존성 동기화</td></tr><tr><td><code>uv tree</code></td><td>의존성 트리 확인</td></tr></tbody></table></div>
+<p>여기서 <code>uv lock</code>도 알아두면 좋아. 패키지들의 의존성 해결 결과를 <code>uv.lock</code>에 기록하거나 갱신하는 명령어야.</p>
+<p>다만 일반적인 <code>uv add</code>와 <code>uv run</code> 과정에서도 잠금 파일이 자동으로 관리되기 때문에 매번 수동으로 실행할 필요는 없어.</p>
+<h3>간단한 연습</h3>
+<p>다음 명령어를 실행해 봐.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-37" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-37" class="language-bash"><span class="code-line">uv tree</span></code></pre></div>
+<p>프로젝트에서 어떤 패키지를 사용하고, 각각의 패키지가 다른 어떤 패키지를 필요로 하는지 계층 구조로 확인할 수 있어.</p>
+<p>또 하나 기억하자.</p>
+<p><strong>uv 프로젝트에서는 가능하면 <code>pip install 패키지명</code>보다는 <code>uv add 패키지명</code>을 사용하자.</strong></p>
+<p><code>uv add</code>는 패키지를 설치하는 것뿐만 아니라 프로젝트 설정과 잠금 파일도 함께 관리하기 때문이야.</p>
+</section>
+<section class="lesson-section" id="section-10" aria-labelledby="title-10"><header class="section-heading"><span class="section-number" aria-hidden="true">10</span><h2 id="title-10">자주 발생하는 오류와 해결 방법</h2></header><p><strong>오류 ① <code>uv</code> 명령어를 찾을 수 없음</strong></p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-38" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-38" class="language-text"><span class="code-line">uv: command not found</span></code></pre></div>
+<p>Windows에서는 다음과 비슷하게 나타날 수 있어.</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-39" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-39" class="language-text"><span class="code-line">&#x27;uv&#x27; is not recognized...</span></code></pre></div>
+<p>원인: uv가 설치되지 않았거나, 설치 경로가 PATH에 반영되지 않았을 수 있어.</p>
+<p>해결: 터미널을 완전히 닫고 다시 열어 <code>uv --version</code>을 실행해. 여전히 안 된다면 설치 과정에서 PATH 설정 안내가 있었는지 확인하고 공식 설치 방법을 다시 점검해.</p>
+<p><strong>오류 ② <code>ModuleNotFoundError</code></strong></p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-40" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-40" class="language-text"><span class="code-line">ModuleNotFoundError: No module named &#x27;langchain_openai&#x27;</span></code></pre></div>
+<p>원인: 패키지가 설치되지 않았거나, 코드 실행 시 다른 Python 환경을 사용하고 있을 수 있어.</p>
+<p>프로젝트 폴더에서 다음 명령어를 실행해.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-41" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-41" class="language-bash"><span class="code-line">uv add langchain-openai</span><span class="code-line">uv run python check_env.py</span></code></pre></div>
+<p><code>python check_env.py</code> 대신 <code>uv run python check_env.py</code>로 실행하는 것이 중요해.</p>
+<p><strong>오류 ③ <code>pyproject.toml</code>을 찾을 수 없음</strong></p>
+<p>원인: 현재 터미널이 프로젝트 폴더 밖에 있을 수 있어.</p>
+<p>다음 명령어로 이동해.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-42" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-42" class="language-bash"><span class="code-line">cd langchain-study</span></code></pre></div>
+<p>현재 위치에서 <code>pyproject.toml</code>이 보이는지 확인한 다음 다시 실행해.</p>
+<p><strong>오류 ④ Python 버전 또는 패키지 호환성 문제</strong></p>
+<p>다음과 같은 메시지가 발생할 수 있어.</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-43" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-43" class="language-text"><span class="code-line">No solution found when resolving dependencies</span></code></pre></div>
+<p>원인은 다양하지만 Python 버전 요구사항이나 패키지 간 버전 충돌이 흔한 이유야.</p>
+<p>우선 다음 명령어로 버전을 확인해.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-44" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-44" class="language-bash"><span class="code-line">uv run python --version</span></code></pre></div>
+<p>그리고 <code>pyproject.toml</code>의 <code>requires-python</code> 값과 오류 메시지에 표시된 패키지 요구사항을 확인해.</p>
+<p>이번 실습에서는 프로젝트를 Python 3.11 기준으로 생성해야 해.</p>
+<p><strong>오류 ⑤ VS Code에서는 import 오류가 표시되지만 터미널에서는 실행됨</strong></p>
+<p>VS Code가 프로젝트의 가상환경이 아닌 다른 Python을 선택했을 수 있어.</p>
+<p>VS Code에서 <code>Ctrl+Shift+P</code>(macOS는 <code>Cmd+Shift+P</code>)를 누른 다음 <code>Python: Select Interpreter</code>를 찾아 실행해.</p>
+<p>아래 경로의 Python을 선택하면 돼.</p>
+<p>Windows</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-45" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-45" class="language-text"><span class="code-line">.venv\Scripts\python.exe</span></code></pre></div>
+<p>macOS / Linux</p>
+<div class="codebox"><div class="codebar"><span>예상 결과 / 흐름</span><div><button type="button" class="copy" data-copy="code-46" aria-label="예상 결과 / 흐름 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="예상 결과 / 흐름 코드"><code id="code-46" class="language-text"><span class="code-line">.venv/bin/python</span></code></pre></div>
+<p><strong>오류 ⑥ 패키지 다운로드가 실패함</strong></p>
+<p>네트워크 오류나 인증서 오류가 나타날 수 있어.</p>
+<p>우선 인터넷 연결과 프록시·방화벽 설정을 확인하고 다음 명령어로 다시 시도해.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-47" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-47" class="language-bash"><span class="code-line">uv sync</span></code></pre></div>
+<p>회사 네트워크에서 인증서 오류가 발생했다면 인증서 설정을 확인해야 해. 보안 검증을 무조건 끄는 방식은 권장하지 않아.</p>
+</section>
+<section class="lesson-section" id="section-11" aria-labelledby="title-11"><header class="section-heading"><span class="section-number" aria-hidden="true">11</span><h2 id="title-11">직접 해보는 추가 실습</h2></header><p>이번 강의에서 배운 내용을 활용해서 프로젝트가 제대로 설정되었는지 확인하자.</p>
+<div class="practice-list"><div class="practice-top"><span>실습 체크리스트</span><span id="practice-count" class="practice-count" aria-live="polite">0 / 6 완료</span></div><progress id="practice-progress" class="practice-progress" value="0" max="6" aria-label="실습 완료 진행률"></progress><label><input class="practice-check" type="checkbox"><span><b>1. uv와 Python 버전 확인하기</b><small>uv --version과 uv python list --only-installed로 설치를 확인해.</small></span></label><label><input class="practice-check" type="checkbox"><span><b>2. 프로젝트 폴더와 설정 파일 확인하기</b><small>langchain-study 안에서 .python-version과 pyproject.toml을 열어 봐.</small></span></label><label><input class="practice-check" type="checkbox"><span><b>3. 세 패키지의 설치 상태 살펴보기</b><small>uv tree로 langchain, langchain-openai, python-dotenv를 찾아봐.</small></span></label><label><input class="practice-check" type="checkbox"><span><b>4. check_env.py를 실행해 성공 문구 확인하기</b><small>uv run python check_env.py를 실행해 “개발 환경 준비 완료!”를 확인해.</small></span></label><label><input class="practice-check" type="checkbox"><span><b>5. 프로젝트의 가상환경 사용 여부 확인하기</b><small>sys.executable 출력 경로에 .venv가 포함되는지 확인해.</small></span></label><label><input class="practice-check" type="checkbox"><span><b>6. 잠금 파일과 Git 제외 항목 확인하기</b><small>uv.lock이 생성됐고 .gitignore에 .venv/와 .env가 들어 있는지 확인해.</small></span></label></div><details class="solution"><summary>확인 명령어와 완료 기준 보기</summary><div><div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-4" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-4" class="language-bash"><span class="code-line">uv --version</span><span class="code-line">uv run python --version</span><span class="code-line">uv tree</span><span class="code-line">uv run python check_env.py</span><span class="code-line">uv run python -c &quot;import sys; print(sys.executable)&quot;</span></code></pre></div><p class="small">프로젝트 폴더에서 실행해. Python은 3.11 계열, 설치 확인 코드는 “개발 환경 준비 완료!”, 실행 경로는 프로젝트의 .venv를 가리키면 돼. 버전 번호와 전체 경로는 컴퓨터마다 달라져.</p></div></details></section>
+<section class="lesson-section" id="section-12" aria-labelledby="title-12"><header class="section-heading"><span class="section-number" aria-hidden="true">12</span><h2 id="title-12">오늘의 이해도 퀴즈</h2></header><div class="quiz"><fieldset class="question" id="question-1"><legend>01. uv는 어떤 일을 하는 도구일까?</legend><div class="options"><label><input type="radio" name="q1" value="a" aria-describedby="feedback-1"><span>A. AI의 답변을 직접 생성한다.</span></label><label><input type="radio" name="q1" value="b" aria-describedby="feedback-1"><span>B. Python 버전, 패키지, 가상환경과 프로젝트 의존성을 관리한다.</span></label><label><input type="radio" name="q1" value="c" aria-describedby="feedback-1"><span>C. OpenAI API 키를 발급한다.</span></label></div><p class="feedback" id="feedback-1" hidden></p></fieldset><fieldset class="question" id="question-2"><legend>02. 이번 강의에서 <code>--no-package</code>를 지정하는 이유는?</legend><div class="options"><label><input type="radio" name="q2" value="a" aria-describedby="feedback-2"><span>A. 빌드 시스템 없이 main.py를 직접 실행하는 간단한 구조로 시작하려고.</span></label><label><input type="radio" name="q2" value="b" aria-describedby="feedback-2"><span>B. 모든 패키지의 설치를 금지하려고.</span></label><label><input type="radio" name="q2" value="c" aria-describedby="feedback-2"><span>C. Python 설치를 생략하려고.</span></label></div><p class="feedback" id="feedback-2" hidden></p></fieldset><fieldset class="question" id="question-3"><legend>03. <code>uv run python check_env.py</code>의 특징은?</legend><div class="options"><label><input type="radio" name="q3" value="a" aria-describedby="feedback-3"><span>A. 항상 컴퓨터의 기본 Python만 사용한다.</span></label><label><input type="radio" name="q3" value="b" aria-describedby="feedback-3"><span>B. 매번 .venv를 먼저 수동 활성화해야 한다.</span></label><label><input type="radio" name="q3" value="c" aria-describedby="feedback-3"><span>C. uv가 관리하는 프로젝트 환경에서 프로그램을 실행한다.</span></label></div><p class="feedback" id="feedback-3" hidden></p></fieldset><fieldset class="question" id="question-4"><legend>04. 의존성의 구체적인 버전 조합을 기록하는 파일은?</legend><div class="options"><label><input type="radio" name="q4" value="a" aria-describedby="feedback-4"><span>A. .env</span></label><label><input type="radio" name="q4" value="b" aria-describedby="feedback-4"><span>B. uv.lock</span></label><label><input type="radio" name="q4" value="c" aria-describedby="feedback-4"><span>C. README.md</span></label></div><p class="feedback" id="feedback-4" hidden></p></fieldset><fieldset class="question" id="question-5"><legend>05. 이번 강의의 <code>check_env.py</code>를 실행할 때 API 비용은?</legend><div class="options"><label><input type="radio" name="q5" value="a" aria-describedby="feedback-5"><span>A. 모델을 호출하지 않으므로 API 사용 요금이 발생하지 않는다.</span></label><label><input type="radio" name="q5" value="b" aria-describedby="feedback-5"><span>B. ChatOpenAI를 import하면 바로 사용 요금이 발생한다.</span></label><label><input type="radio" name="q5" value="c" aria-describedby="feedback-5"><span>C. LangChain 버전을 출력할 때마다 모델을 호출한다.</span></label></div><p class="feedback" id="feedback-5" hidden></p></fieldset><div class="quiz-actions"><button type="button" class="primary" id="quiz-check">정답 확인</button><button type="button" id="quiz-reset">다시 풀기</button></div><p id="quiz-result" class="quiz-result" role="status" aria-live="polite"></p></div></section>
+<section class="lesson-section" id="section-13" aria-labelledby="title-13"><header class="section-heading"><span class="section-number" aria-hidden="true">13</span><h2 id="title-13">오늘 배운 내용 최종 정리</h2></header><p>이번 강의에서 가장 중요한 것은 5개의 명령어야.</p>
+<div class="codebox"><div class="codebar"><span>터미널</span><div><button type="button" class="copy" data-copy="code-48" aria-label="터미널 코드 복사">복사</button></div></div><pre tabindex="0" aria-label="터미널 코드"><code id="code-48" class="language-bash"><span class="code-line"># 1. Python 3.11 설치</span><span class="code-line">uv python install 3.11</span><span class="code-line"> </span><span class="code-line"># 2. 프로젝트 생성</span><span class="code-line">uv init --no-package --python 3.11 langchain-study</span><span class="code-line"> </span><span class="code-line"># 3. 프로젝트 폴더 이동</span><span class="code-line">cd langchain-study</span><span class="code-line"> </span><span class="code-line"># 4. 패키지 설치</span><span class="code-line">uv add langchain langchain-openai python-dotenv</span><span class="code-line"> </span><span class="code-line"># 5. 프로그램 실행</span><span class="code-line">uv run python check_env.py</span></code></pre></div>
+<p>마지막 명령어는 7장에서 작성한 <code>check_env.py</code> 파일이 있어야 실행할 수 있어.</p>
+<p>이 다섯 가지를 이해했다면 LangChain 공부를 위한 개발 환경을 갖춘 거야.</p>
+<h3>다음 강의: CH 02-3강 API 키와 환경변수</h3>
+<p>다음 강의에서는 실제 OpenAI 모델을 호출하기 위해 필요한 API 키를 준비할 거야.</p>
+<p>다음 내용을 배울 예정이야.</p>
+<ul><li>OpenAI API 키의 개념과 발급 방법</li><li><code>.env</code> 파일과 환경변수의 차이</li><li><code>python-dotenv</code>로 API 키 불러오기</li><li>API 키가 정상적으로 설정되었는지 확인하기</li><li>GitHub에 API 키가 노출되지 않도록 관리하기</li></ul>
+<a class="next-link" href="ch02-3-api-key-env.html">CH 02-3강 시작하기 →</a><p class="small" style="margin:12px 0 22px">다음 강의도 오프라인에서 이어서 볼 수 있어.</p>
+<p>공식 참고 자료: <a href="https://docs.astral.sh/uv/guides/projects/" target="_blank" rel="noopener noreferrer">uv 프로젝트 관리 가이드 ↗</a> · <a href="https://docs.langchain.com/oss/python/langchain/install" target="_blank" rel="noopener noreferrer">LangChain 설치 가이드 ↗</a></p></section>
+<a class="prev-bottom" href="ch02-1-langchain.html">← CH 02-1강으로 돌아가기</a><footer class="footer"><p>CH 02-2강 · 랭체인 공부하기 · 2026년 10월 29일</p><a href="https://docs.astral.sh/uv/getting-started/installation/" target="_blank" rel="noopener noreferrer">uv 설치 ↗</a><a href="https://docs.astral.sh/uv/guides/projects/" target="_blank" rel="noopener noreferrer">uv 프로젝트 가이드 ↗</a><a href="https://docs.langchain.com/oss/python/langchain/install" target="_blank" rel="noopener noreferrer">LangChain 설치 ↗</a><a class="back-top" href="#top">수업 맨 위로 ↑</a></footer></main></div><div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script>
+(() => {
+  'use strict';
+  const $ = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const toast = $('#toast');
+  let toastTimer;
+  function announce(message) {
+    toast.textContent = message;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.hidden = true; }, 2300);
+  }
+  $$('.copy').forEach(button => button.addEventListener('click', async () => {
+    const code = document.getElementById(button.dataset.copy);
+    const text = Array.from(code.querySelectorAll('.code-line')).map(line => line.textContent === ' ' ? '' : line.textContent).join('\n');
+    try {
+      if (!navigator.clipboard || !window.isSecureContext) throw new Error('fallback');
+      await navigator.clipboard.writeText(text);
+    } catch (_) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.cssText = 'position:fixed;left:-9999px;top:0';
+      document.body.appendChild(area);
+      area.select();
+      const copied = document.execCommand('copy');
+      area.remove();
+      button.focus({preventScroll:true});
+      if (!copied) {
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        announce('코드를 선택했어. Ctrl+C 또는 ⌘C로 복사해 줘.');
+        return;
+      }
+    }
+    button.textContent = '복사됨 ✓';
+    announce('코드를 복사했어.');
+    setTimeout(() => { button.textContent = '복사'; }, 1800);
+  }));
+  $('#print').addEventListener('click', () => window.print());
+  const checks = $$('.practice-check');
+  function updatePractice() {
+    const count = checks.filter(check => check.checked).length;
+    $('#practice-count').textContent = count + ' / ' + checks.length + ' 완료';
+    $('#practice-progress').value = count;
+  }
+  checks.forEach(check => check.addEventListener('change', updatePractice));
+  updatePractice();
+
+  const osTabs = $$('.os-tabs [role="tab"]');
+  function selectOS(id, moveFocus = false) {
+    osTabs.forEach(tab => {
+      const active = tab.dataset.os === id;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+      if (active && moveFocus) tab.focus();
+    });
+  }
+  osTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectOS(tab.dataset.os));
+    tab.addEventListener('keydown', event => {
+      let next = index;
+      if (event.key === 'ArrowRight') next = (index + 1) % osTabs.length;
+      else if (event.key === 'ArrowLeft') next = (index - 1 + osTabs.length) % osTabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = osTabs.length - 1;
+      else return;
+      event.preventDefault();
+      selectOS(osTabs[next].dataset.os, true);
+    });
+  });
+  const platform = navigator.platform.toLowerCase();
+  selectOS(platform.includes('win') ? 'windows' : platform.includes('linux') ? 'linux' : 'macos');
+  const questionEls = $$('.question');
+  const answers = ["b", "a", "c", "b", "a"];
+  const explanations = ["uv는 Python과 패키지, 가상환경, 프로젝트의 의존성을 관리해. AI 모델 자체는 아니야.", "--no-package는 빌드 시스템이 없는 단순한 프로젝트를 만들어. 이번 강의에서는 main.py를 직접 실행해.", "uv run은 프로젝트의 환경을 사용해 실행해 줘. 가상환경을 매번 수동으로 활성화할 필요가 없어.", "pyproject.toml은 필요한 패키지를 선언하고, uv.lock은 해결된 구체적인 버전 조합을 기록해.", "클래스를 가져오고 버전을 출력할 뿐 모델 객체 생성이나 invoke() 호출을 하지 않아. API 키도 필요 없어."];
+  $('#quiz-check').addEventListener('click', () => {
+    let score = 0;
+    let unanswered = 0;
+    questionEls.forEach((fieldset, index) => {
+      const selected = fieldset.querySelector('input:checked');
+      const feedback = fieldset.querySelector('.feedback');
+      const correct = selected && selected.value === answers[index];
+      if (correct) score++;
+      if (!selected) unanswered++;
+      fieldset.classList.toggle('is-correct', !!correct);
+      fieldset.classList.toggle('is-wrong', !correct);
+      feedback.hidden = false;
+      feedback.textContent = (correct ? '정답 ✓ ' : !selected ? '미응답 · ' : '다시 확인 · ') + '정답 ' + answers[index].toUpperCase() + '. ' + explanations[index];
+    });
+    $('#quiz-result').textContent = '5문제 중 ' + score + '문제 정답' + (unanswered ? ' · 미응답 ' + unanswered + '문제' : '') + (score === 5 ? ' — 모두 이해했어!' : ' — 아래 해설을 확인해 봐.');
+  });
+  $('#quiz-reset').addEventListener('click', () => {
+    questionEls.forEach(fieldset => {
+      fieldset.querySelectorAll('input').forEach(input => { input.checked = false; });
+      fieldset.classList.remove('is-correct', 'is-wrong');
+      fieldset.querySelector('.feedback').hidden = true;
+    });
+    $('#quiz-result').textContent = '선택을 초기화했어. 다시 풀어 봐.';
+    questionEls[0].querySelector('input').focus({preventScroll:true});
+  });
+  const toc = $('#toc-details');
+  const compact = window.matchMedia('(max-width: 840px)');
+  function fitToc() { toc.open = !compact.matches; }
+  fitToc();
+  compact.addEventListener('change', fitToc);
+  $$('.toc a').forEach(link => link.addEventListener('click', () => {if(compact.matches) toc.open = false;}));
+  const sections = $$('.lesson-section');
+  const links = $$('.toc a');
+  let scrollPending = false;
+  function updateScroll() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    $('#reading').value = max > 0 ? Math.min(100, Math.round(window.scrollY / max * 100)) : 100;
+    let current = sections[0];
+    sections.forEach(section => {if(section.getBoundingClientRect().top <= 180) current = section;});
+    links.forEach(link => {if(link.hash === '#' + current.id) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');});
+    scrollPending = false;
+  }
+  window.addEventListener('scroll', () => {if(!scrollPending) {scrollPending = true;requestAnimationFrame(updateScroll);}}, {passive:true});
+  window.addEventListener('resize', updateScroll);
+  updateScroll();
+  let printDetails = [];
+  let printPanels = [];
+  window.addEventListener('beforeprint', () => {printPanels = $$('.os-panel').map(el => [el, el.hidden]);printPanels.forEach(([el]) => {el.hidden = false;});});
+  window.addEventListener('afterprint', () => {printPanels.forEach(([el, hidden]) => {el.hidden = hidden;});});
+  window.addEventListener('beforeprint', () => {printDetails = $$('main details').map(el => [el, el.open]);printDetails.forEach(([el]) => {el.open = true;});});
+  window.addEventListener('afterprint', () => {printDetails.forEach(([el, open]) => {el.open = open;});});
+})();
+</script></body></html>
